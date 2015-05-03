@@ -3,6 +3,8 @@ package messengerserver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -22,13 +24,19 @@ public class Client implements Runnable{
     public void run(){
         
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream());
+            //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            ObjectOutputStream out2 = new ObjectOutputStream(socket.getOutputStream());
+            Thread thread5 = new Thread(new Emission(out2));
+            thread5.start();
             
-            Thread thread3 = new Thread(new Reception(in,login));
-            thread3.start();
-            Thread thread4 = new Thread(new Emission(out));
-            thread4.start();
+            ObjectInputStream in2 = new ObjectInputStream(socket.getInputStream());
+            Thread thread6 = new Thread(new Reception(in2));
+            thread6.start();
+            
+//            Thread thread3 = new Thread(new Reception(in,login));
+//            thread3.start();
+//            Thread thread4 = new Thread(new Emission(out));
+//            thread4.start();
         } catch (IOException e){
             System.err.println(login + " s'est deconnecté.");
         }
