@@ -25,7 +25,8 @@ public class Reception implements Runnable{
                 if (!(objectReceived instanceof Message)){System.out.println("Bad Object. Classe -> " + objectReceived.getClass());}else{
                     Message message = (Message)objectReceived;
                     if (message.getText() != null){
-                        System.out.println("message.getClient().getLogin()" + " :" + message.getText());
+                        System.out.print(message.getClient().getLogin() + "(" +  message.getClient().getIpAddress().getHostAddress() +")");
+                        System.out.println(" : " + message.getText());
                         sender = message.getClient();}
                 }                 
             } catch (IOException e){
