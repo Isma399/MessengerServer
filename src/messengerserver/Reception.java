@@ -17,20 +17,29 @@ public class Reception implements Runnable{
     @Override
     public void run() {
         while (true){
+            if (in2 != null){
             try{
                 Object objectReceived = in2.readObject();
-                if (!(objectReceived instanceof Message)){System.out.println("Bad Object.");}else{
+                if (!(objectReceived instanceof Message)){System.out.println("Bad Object. Classe -> " + objectReceived.getClass());}else{
                     Message message = (Message)objectReceived;
-                    System.out.println(message.getLogin() + " : " + message.getText());
+                    if (message.getLogin() != null){System.out.println(message.toString());}
                 }                 
             } catch (IOException e){
-                //e.printStackTrace();
-                System.out.println("IOException!!!!!!!");
+                e.printStackTrace();
+                //System.out.println("IOException!!!!!!!");
+                
             } catch (ClassNotFoundException ex) {
                 System.err.println("Class Not found");
                 ex.printStackTrace();
                // Logger.getLogger(Reception.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
+//            finally{
+//                try{
+//                    //in2.reset();
+//                    in2.close();
+//                }catch(IOException e){e.printStackTrace();}
+//            }
         }
     }
+}
 }
