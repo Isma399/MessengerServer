@@ -2,7 +2,9 @@ package messengerserver;
 import shared.Message;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.util.Scanner;
+import shared.Client;
 
 public class Emission implements Runnable{
   
@@ -25,9 +27,11 @@ public void run(){
         Scanner scanner = new Scanner(System.in);
         while (true){
             String text = scanner.nextLine();
-            Message message = new Message("","");
-            message.setText(text);
-            message.setLogin("Le serveur dit ");
+            
+            Message message;
+            message = new Message(Reception.sender,text);
+          //TODO boucle d'envoi des messages sauf au client sender
+           
             System.out.println(message.toString());
             out2.writeObject(message);
             out2.flush();

@@ -1,6 +1,5 @@
 package messengerserver;
 import java.net.*;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.io.*;
 
@@ -28,13 +27,14 @@ public class Authentification implements Runnable{
                 
                 if(isValid(login)){
                     
-                    out.println("connecte");
+                    out.println("connecte");//envoi du signal
+                    //TODO creation de l'objet client, ajout dans le serveur.
                     System.out.println(login + " est connecté.");
                     out.flush();
                     isAuthenticated = true;
                 } else {out.println("Erreur Authentification");out.flush();}
             }
-            thread2 = new Thread(new Client(socket,login));
+            thread2 = new Thread(new ActionClient(socket,login));
             thread2.start();
         } catch (IOException e){
             System.err.println("Erreur : " + login + " ne répond pas. ");

@@ -1,6 +1,7 @@
 package messengerserver;
 
 import shared.Message;
+import shared.Client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,6 +10,7 @@ import java.util.logging.Logger;
 
 public class Reception implements Runnable{
     public        ObjectInputStream in2; 
+    public static Client sender;
     
     public Reception(ObjectInputStream in2){
         this.in2 = in2;
@@ -22,7 +24,9 @@ public class Reception implements Runnable{
                 Object objectReceived = in2.readObject();
                 if (!(objectReceived instanceof Message)){System.out.println("Bad Object. Classe -> " + objectReceived.getClass());}else{
                     Message message = (Message)objectReceived;
-                    if (message.getLogin() != null){System.out.println(message.toString());}
+                    if (message.getText() != null){
+                        System.out.println("message.getClient().getLogin()" + " :" + message.getText());
+                        sender = message.getClient();}
                 }                 
             } catch (IOException e){
                 e.printStackTrace();
