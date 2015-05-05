@@ -6,8 +6,12 @@ public class MessengerServer {
 
     public static  ServerSocket serverSocket = null;
     public static Thread thread;
+  //  public UserManagment userList = new UserManagment();
+    
     
     public static void main(String[] args) {
+        
+        
         try {
             serverSocket = new ServerSocket(5000);
             System.out.println("Ecoute du serveur sur le port : " + serverSocket.getLocalPort());

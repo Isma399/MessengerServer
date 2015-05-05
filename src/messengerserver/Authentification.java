@@ -11,6 +11,7 @@ public class Authentification implements Runnable{
     public boolean isAuthenticated = false;
     public Thread thread2;
     
+    
     public Authentification(Socket s){
         socket = s;
     }
@@ -32,6 +33,7 @@ public class Authentification implements Runnable{
                     System.out.println(login + " est connecté.");
                     out.flush();
                     isAuthenticated = true;
+                    //UserManagment.
                 } else {out.println("Erreur Authentification");out.flush();}
             }
             thread2 = new Thread(new ActionClient(socket,login));
