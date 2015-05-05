@@ -2,32 +2,32 @@ package messengerserver;
 import shared.Client;
 //import java.util.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 
 public class UserManagment {
-    List<Client>  userList; 
+    Set<Client>  userSet; 
     
-    public UserManagment(UserManagment list){
-        this.userList = new ArrayList<>();
-        try{
-        Client test = new Client ("test", InetAddress.getLocalHost());
-        this.userList.add(test);
-        }catch (UnknownHostException e){e.printStackTrace();}
-        this.userList=list;
+    public UserManagment(){
+//        this.userList = new ArrayList<>();
+//        try{
+//        Client test = new Client ("test", InetAddress.getLocalHost());
+//        this.userList.add(test);
+//        }catch (UnknownHostException e){e.printStackTrace();}
+//        this.userList=list;
     }
     
-    public  void addUser(Client client){this.userList.add(client);}
-    public  List<Client> delUser(Client client){userList.remove(client);return  userList;}
+    public  void addUser(Client client){this.userSet.add(client);}
+    public  Set<Client> delUser(Client client){userSet.remove(client);return  userSet;}
 
-    public List<Client> getUserList() {
-        return userList;
+    public Set<Client> getUserSet() {
+        return userSet;
     }
 
-    public void setUserList(List<Client> userList) {
-        this.userList = userList;
+    public void setUserSet(Set<Client> userSet) {
+        this.userSet = userSet;
     }
     
     
