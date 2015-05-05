@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Iterator;
 
 
 public class UserManagment {
     Set<Client>  userSet; 
     
-    public UserManagment(){
+    public UserManagment(Set<Client> userSet){
+        this.userSet=userSet;        
 //        this.userList = new ArrayList<>();
 //        try{
 //        Client test = new Client ("test", InetAddress.getLocalHost());
@@ -29,9 +31,13 @@ public class UserManagment {
     public void setUserSet(Set<Client> userSet) {
         this.userSet = userSet;
     }
-    
-    
-    
-    
-
-}
+    @Override
+    public String toString(){
+        String userString = null;
+        Iterator<Client> iterator= userSet.iterator();
+        while (iterator.hasNext()){
+            userString +=iterator.next();
+        }
+        return userString;
+    }
+ }

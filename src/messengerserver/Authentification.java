@@ -13,6 +13,7 @@ public class Authentification implements Runnable{
     public boolean isAuthenticated = false;
     public Thread thread2;
     private Set<Client> userSet;
+    private UserManagment userManagment;
     private InetAddress inAddress;
     
     public Authentification(Socket s,Set<Client> userSet){
