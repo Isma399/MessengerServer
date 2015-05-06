@@ -6,7 +6,7 @@ public class Client implements Serializable{
     private String login;
     private InetAddress ipAddress;
    
-    public Client(String login,InetAddress ipAddress){}
+    public Client(String login,InetAddress ipAddress){this.login=login;this.ipAddress=ipAddress;}
     
        public String getLogin() {
         return login;
@@ -23,6 +23,11 @@ public class Client implements Serializable{
     public void setIpAddress(InetAddress ipAddress) {
         this.ipAddress = ipAddress;
     }
+    @Override
+    public String toString(){
+        return login + ipAddress;
+    }
+            
     
     
 }

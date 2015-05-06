@@ -2,38 +2,47 @@ package messengerserver;
 
 import shared.Message;
 import shared.Client;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Reception implements Runnable{
-    public        ObjectInputStream in2; 
+    public        ObjectInputStream in; 
+    public  ObjectOutputStream out;
+    public Socket socket;
     public static Client sender;
     
-    public Reception(ObjectInputStream in2){
-        this.in2 = in2;
+    public Reception(Socket socket,ObjectInputStream in){
+        this.in = in;this.socket=socket;
     }
 
     @Override
     public void run() {
         while (true){
-            if (in2 != null){
+            if (in != null){
             try{
-                Object objectReceived = in2.readObject();
-                if (!(objectReceived instanceof Message)){System.out.println("Bad Object. Classe -> " + objectReceived.getClass());}else{
+                Object objectReceived = in.readObject();
+                if (!(objectReceived instanceof Message)){System.out.println("Bad Object. Classe -> " + objectReceived.getClass());}
+                else{
                     Message message = (Message)objectReceived;
                     if (message.getText() != null){
-                        System.out.print(message.getClient().getLogin() + "(" +  message.getClient().getIpAddress().getHostAddress() +")");
+                        System.out.print("\t" + message.getClient().getLogin() + "(" +  message.getClient().getIpAddress().getHostAddress() +")");
                         System.out.println(" : " + message.getText());
-                        sender = message.getClient();}
-                }                 
-            } catch (IOException e){
-                e.printStackTrace();
-                //System.out.println("IOException!!!!!!!");
-                
-            } catch (ClassNotFoundException ex) {
+                        //Test Emission
+                        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                        message.setText(message.getClient().getLogin() + " :" + message.getText());
+                        Thread thread3 = new Thread(new Emission(out,message.getText()));
+                        thread3.start();
+                    }                 
+                }
+            }catch (IOException e){
+                //e.printStackTrace();
+                System.out.println("IOException!!!!!!!");
+                try{in.close();}catch(IOException ex){ex.printStackTrace();}
+            }catch (ClassNotFoundException ex) {
                 System.err.println("Class Not found");
                 ex.printStackTrace();
                // Logger.getLogger(Reception.class.getName()).log(Level.SEVERE, null, ex);

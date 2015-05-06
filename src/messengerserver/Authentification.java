@@ -2,7 +2,6 @@ package messengerserver;
 import java.net.*;
 import java.util.Scanner;
 import java.io.*;
-import java.util.Set;
 import shared.Client;
 
 public class Authentification implements Runnable{
@@ -12,13 +11,10 @@ public class Authentification implements Runnable{
     private String login = "test";
     public boolean isAuthenticated = false;
     public Thread thread2;
-    private Set<Client> userSet;
-    private UserManagment userManagment;
     private InetAddress inAddress;
     
-    public Authentification(Socket s,Set<Client> userSet){
-        socket = s;this.userSet=userSet;
-    }
+    public Authentification(Socket s){socket = s;}
+    
     @Override
     public void run(){
         try {
@@ -36,13 +32,12 @@ public class Authentification implements Runnable{
                     
                     out.println("connecte");//envoi du signal
                     //TODO creation de l'objet client, ajout dans le serveur.
-                    System.out.println(login + " est connecté.");
+                    System.out.print(login + " connecté. ");
                     out.flush();
                     isAuthenticated = true;
                     //UserManagment.
                     Client newClient = new Client (login,inAddress);
-                    userSet.add(newClient);
-                    System.out.println("UserSet.toString()" + userSet.toString());
+                    System.out.println("Un client créé : " + newClient);
                 } else {out.println("Erreur Authentification");out.flush();}
             }
             thread2 = new Thread(new ActionClient(socket,login));
@@ -70,6 +65,5 @@ public class Authentification implements Runnable{
             System.err.println("Le fichier login.txt n'a pas été trouvé!");
         }
     return connexion;
-            
     }
 }
