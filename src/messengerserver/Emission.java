@@ -1,37 +1,28 @@
 package messengerserver;
 import shared.Message;
 import java.io.*;
-import java.util.Scanner;
 
 public class Emission implements Runnable{
   
    public ObjectOutputStream out;
-   public String text;
-      
-   public Emission(ObjectOutputStream out,String text){this.out=out;this.text=text;}
+   public Message message,mess;
+         
+   public Emission(ObjectOutputStream out, Message message){this.out=out;this.message=message;}
 
    @Override
     public void run(){
         try{
-        //Scanner scanner = new Scanner(System.in);
-        //while (true){
-            //String text = scanner.nextLine();
-            
-            Message message = new Message();
-            message.setClient(MessengerServer.messServer);
-            message.setText(text);
-            
-          //TODO boucle d'envoi des messages sauf au client sender
-           
-            System.out.println("\t\t" + message);
+                    
+            if (out!=null){
+            for (int i=0;i<Manage.user.size();i++){
+                if (Manage.user.get(i).getLogin().equals(message.getClient().getLogin())){
+                    System.out.println(message.getClient().getSocket() + " ne devrait pas recevoir.");
+                }
+            }
+            System.out.println("Emission de : " + message.getClient().getLogin() + " vers : " + Manage.user);
             out.writeObject(message);
             out.flush();
-//            out2.reset();
-          //  }
+            }else{System.err.println("Socket puante");}
         }catch(IOException e){e.printStackTrace();}
-//        finally{
-//        try{ 
-//            out2.close();
-//        }catch(IOException e){e.printStackTrace();}}
-}
+    }
 }

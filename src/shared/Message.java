@@ -27,7 +27,7 @@ public class Message implements Serializable {
     }
     @Override
     public String toString(){
-        return client.getLogin() + " : " + text;
+        return this.client.getLogin() + " : " + text;
     }
    
     

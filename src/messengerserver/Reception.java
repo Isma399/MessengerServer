@@ -10,17 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Reception implements Runnable{
-    public        ObjectInputStream in; 
-    public  ObjectOutputStream out;
+    public ObjectInputStream in; 
+    public ObjectOutputStream out;
     public Socket socket;
-    public static Client sender;
     
-    public Reception(Socket socket,ObjectInputStream in){
-        this.in = in;this.socket=socket;
+    public Reception(Socket socket,ObjectInputStream in,ObjectOutputStream out){
+        this.in = in;this.socket=socket;this.out=out;
     }
 
     @Override
     public void run() {
+                  
         while (true){
             if (in != null){
             try{
@@ -29,15 +29,17 @@ public class Reception implements Runnable{
                 else{
                     Message message = (Message)objectReceived;
                     if (message.getText() != null){
-                        System.out.print("\t" + message.getClient().getLogin() + "(" +  message.getClient().getIpAddress().getHostAddress() +")");
-                        System.out.println(" : " + message.getText());
-                        //Test Emission
-                        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                        message.setText(message.getClient().getLogin() + " :" + message.getText());
-                        Thread thread3 = new Thread(new Emission(out,message.getText()));
+                        System.out.print("\t" + message);
+                        System.out.println("Expéditeur :  " + message.getClient().getLogin());
+                        //message.setClient(MessengerServer.server);
+                        
+                        if (out!=null){
+                        Thread thread3 = new Thread(new Emission(out,message));
                         thread3.start();
-                    }                 
-                }
+                        }else{System.err.println("Socket inexistante!!");
+                        }
+                    };
+                }                 
             }catch (IOException e){
                 //e.printStackTrace();
                 System.out.println("IOException!!!!!!!");
