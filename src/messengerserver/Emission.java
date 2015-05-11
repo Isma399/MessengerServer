@@ -15,14 +15,13 @@ public class Emission implements Runnable{
                     
             if (out!=null){
             for (int i=0;i<Manage.user.size();i++){
-                if (Manage.user.get(i).getLogin().equals(message.getClient().getLogin())){
-                    System.out.println(message.getClient().getSocket() + " ne devrait pas recevoir.");
+                if (Manage.user.get(i).getLogin().equals(message.getClient().getLogin())){}
+                else{
+                    Manage.user.get(i).getOutputStream().writeObject(message);
+                    Manage.user.get(i).getOutputStream().flush();
                 }
             }
-            System.out.println("Emission de : " + message.getClient().getLogin() + " vers : " + Manage.user);
-            out.writeObject(message);
-            out.flush();
-            }else{System.err.println("Socket puante");}
+            }else{System.err.println("ObjectOutputStream non reçu pour Emission.java.");}
         }catch(IOException e){e.printStackTrace();}
     }
 }

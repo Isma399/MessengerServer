@@ -29,20 +29,16 @@ public class Reception implements Runnable{
                 else{
                     Message message = (Message)objectReceived;
                     if (message.getText() != null){
-                        System.out.print("\t" + message);
-                        System.out.println("Expéditeur :  " + message.getClient().getLogin());
-                        //message.setClient(MessengerServer.server);
-                        
+                        System.out.println(message);
                         if (out!=null){
-                        Thread thread3 = new Thread(new Emission(out,message));
-                        thread3.start();
-                        }else{System.err.println("Socket inexistante!!");
-                        }
-                    };
+                            Thread thread3 = new Thread(new Emission(out,message));
+                            thread3.start();
+                        }else{System.err.println("Socket inexistante!!");}
+                    }
                 }                 
             }catch (IOException e){
-                //e.printStackTrace();
-                System.out.println("IOException!!!!!!!");
+                e.printStackTrace();
+                //System.out.println("IOException!!!!!!!");
                 try{in.close();}catch(IOException ex){ex.printStackTrace();}
             }catch (ClassNotFoundException ex) {
                 System.err.println("Class Not found");

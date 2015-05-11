@@ -19,7 +19,7 @@ public class Authentification implements Runnable{
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             clientSocket = socket.getRemoteSocketAddress();
-            System.out.println("(Authentification java a reçu comme socket : " + clientSocket + ")");
+            System.out.print(clientSocket + "->");
             out = new PrintWriter(socket.getOutputStream());
             
             while(!isAuthenticated){
@@ -28,16 +28,15 @@ public class Authentification implements Runnable{
                 login = in.readLine();
                 
                 if(Manage.user.test(login)){
-                    
                     out.println("connecte");//envoi du signal
                    
-                    System.out.print(login + " connecté. ");
+                    System.out.print(login + " connecté, ");
                     out.flush();
                     isAuthenticated = true;
                    
-                    Client newClient = new Client (login,clientSocket,null);
+                    Client newClient = new Client (login,null);
                     Manage.user.add(newClient);
-                    System.out.println("Un client créé. Dans le serveur, on a : ");
+                    System.out.println("créé, ajouté dans le serveur : ");
                     System.out.println(Manage.user);
                 } else {out.println("Erreur Authentification");out.flush();}
             }

@@ -21,16 +21,8 @@ public class ActionClient implements Runnable{
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             Manage.user.setOutput(login,out);
-            for (int i = 0;i<Manage.user.size();i++){
-                System.out.println("Output ! " + Manage.user.get(i).getOutputStream());
-            }
             Thread thread4 = new Thread(new Reception(socket,in,out));
             thread4.start();
-            
-         
-//           Thread thread3 = new Thread(new Emission(out,message));
-//          thread3.start();
- 
         } catch (IOException e){
             System.err.println(login + " s'est deconnecté.");
         }
