@@ -15,7 +15,7 @@ public class AcceptConnexion implements Runnable{
         try {
             while(true){
                 socket = socketserver.accept();
-                System.out.print("Un client veut se connecter->");
+                view.ViewServer.appendInfo("Un client veut se connecter->");
                 thread1 = new Thread(new Authentification(socket));
                 thread1.start();
             }

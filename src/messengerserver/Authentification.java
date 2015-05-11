@@ -2,6 +2,9 @@ package messengerserver;
 import java.net.*;
 import java.io.*;
 import shared.Client;
+//import view.ViewServer;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
 
 public class Authentification implements Runnable{
     private final Socket socket;
@@ -19,7 +22,7 @@ public class Authentification implements Runnable{
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             clientSocket = socket.getRemoteSocketAddress();
-            System.out.print(clientSocket + "->");
+            view.ViewServer.appendInfo(clientSocket + "->");
             out = new PrintWriter(socket.getOutputStream());
             
             while(!isAuthenticated){
@@ -30,14 +33,15 @@ public class Authentification implements Runnable{
                 if(Manage.user.test(login)){
                     out.println("connecte");//envoi du signal
                    
-                    System.out.print(login + " connecté, ");
+                    view.ViewServer.appendInfo(login + " connecté, ");
                     out.flush();
                     isAuthenticated = true;
                    
                     Client newClient = new Client (login,null);
                     Manage.user.add(newClient);
-                    System.out.println("créé, ajouté dans le serveur : ");
-                    System.out.println(Manage.user);
+                    view.ViewServer.setList(Manage.user.toString());
+                   view.ViewServer.appendInfo("créé, ajouté dans le serveur :\n");
+                    view.ViewServer.appendInfo(Manage.user.toString());
                 } else {out.println("Erreur Authentification");out.flush();}
             }
             thread2 = new Thread(new ActionClient(socket,login));
