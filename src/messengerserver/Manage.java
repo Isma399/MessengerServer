@@ -41,6 +41,5 @@ public class Manage {
         }
         return text;
     }
-    
-public  static Manage user=new Manage();
+    public  static Manage user=new Manage();
 }

@@ -1,13 +1,10 @@
 package messengerserver;
 
 import shared.Message;
-import shared.Client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Reception implements Runnable{
     public ObjectInputStream in; 
@@ -43,14 +40,7 @@ public class Reception implements Runnable{
             }catch (ClassNotFoundException ex) {
                 System.err.println("Class Not found");
                 ex.printStackTrace();
-               // Logger.getLogger(Reception.class.getName()).log(Level.SEVERE, null, ex);
             } 
-//            finally{
-//                try{
-//                    //in2.reset();
-//                    in2.close();
-//                }catch(IOException e){e.printStackTrace();}
-//            }
         }
     }
 }
