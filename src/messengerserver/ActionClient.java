@@ -20,7 +20,12 @@ public class ActionClient implements Runnable{
         try {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            Manage.user.setOutput(login,out);
+            Message welcome =new Message();
+            welcome.setClient(MessengerServer.server);
+            welcome.setText("Bienvenue, les utilisateurs connectés : " + Manage.user.toStringWelcome());
+            out.writeObject(welcome);
+            out.flush();
+            Manage.user.setStream(login,out,in,socket);
             Thread thread4 = new Thread(new Reception(socket,in,out));
             thread4.start();
         } catch (IOException e){

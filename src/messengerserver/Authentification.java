@@ -15,6 +15,7 @@ public class Authentification implements Runnable{
     public Thread thread2;
     public SocketAddress clientSocket;
     
+    
     public Authentification(Socket s){socket = s;}
     
     @Override
@@ -32,16 +33,12 @@ public class Authentification implements Runnable{
                 
                 if(Manage.user.test(login)){
                     out.println("connecte");//envoi du signal
-                   
-                    view.ViewServer.appendInfo(login + " connecté, ");
+                    view.ViewServer.appendInfo(login + " connecté.\n");
                     out.flush();
                     isAuthenticated = true;
-                   
-                    Client newClient = new Client (login,null);
+                    Client newClient = new Client (login,null,null,null);
                     Manage.user.add(newClient);
                     view.ViewServer.setList(Manage.user.toString());
-                   view.ViewServer.appendInfo("créé, ajouté dans le serveur :\n");
-                    view.ViewServer.appendInfo(Manage.user.toString());
                 } else {out.println("Erreur Authentification");out.flush();}
             }
             thread2 = new Thread(new ActionClient(socket,login));

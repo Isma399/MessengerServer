@@ -17,14 +17,11 @@ public class Reception implements Runnable{
     public Reception(Socket socket,ObjectInputStream in,ObjectOutputStream out){
         this.in = in;this.socket=socket;this.out=out;
     }
-//    public void ActionPerformed(ActionEvent chatUpdate,String text){
-//        view.ViewServer.chat.append(text);
-//    }
 
     @Override
     public void run() {
-                  
-        while (true){
+        boolean connected = true;          
+        while (connected){
             if (in != null){
             try{
                 Object objectReceived = in.readObject();
@@ -40,18 +37,22 @@ public class Reception implements Runnable{
                         }else{System.err.println("Socket inexistante!!");}
                     }
                 }                 
-            }catch (IOException e){
-                try{
-                String delUser = Manage.user.del(out);
+            }
+            catch (IOException e){
+                String delUser = Manage.user.del(out,in);
                 view.ViewServer.setList(Manage.user.toString());
-                view.ViewServer.appendInfo("Déconnexion de " + delUser);
-                out.close();
-                break;
-                }catch(IOException ex){ex.printStackTrace();}
-            }catch (ClassNotFoundException ex) {
+                view.ViewServer.appendInfo("Déconnexion de " + delUser + ".\n");
+                connected=false;
+            }
+            catch (ClassNotFoundException ex) {
                 System.err.println("Class Not found");
                 ex.printStackTrace();
             } 
+//            catch(java.net.SocketTimeoutException e2){
+//                System.err.println("Timed out trying to read from socket");
+//                connected=false;
+//            }
+            
         }
     }
 }
