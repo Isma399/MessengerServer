@@ -27,24 +27,32 @@ public class Authentification implements Runnable{
             out = new PrintWriter(socket.getOutputStream());
             
             while(!isAuthenticated){
-                out.println("Entrez votre nom : ");
-                out.flush();
+                //out.println("Entrez votre nom : ");
+                //out.flush();
                 login = in.readLine();
                 
                 if(Manage.user.test(login)){
                     out.println("connecte");//envoi du signal
+                    System.out.println("Envoi du signal connecte");
                     view.ViewServer.appendInfo(login + " connecté.\n");
                     out.flush();
+                                        
                     isAuthenticated = true;
-                    Client newClient = new Client (login,null,null,null);
+                    Client newClient = new Client (login,null,null);
                     Manage.user.add(newClient);
                     view.ViewServer.setList(Manage.user.toString());
-                } else {out.println("Erreur Authentification");out.flush();}
+                } else {
+                    out.println("loginAlreadyUsed");
+                    out.flush();
+                    view.ViewServer.appendInfo(" login déjà utilisé. \n");
+                    out.close();
+                }
             }
             thread2 = new Thread(new ActionClient(socket,login));
             thread2.start();
         } catch (IOException e){
             System.err.println("Erreur : " + login + " ne répond pas. ");
+            //e.printStackTrace();
         }
     }
 }

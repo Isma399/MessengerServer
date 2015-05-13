@@ -19,7 +19,8 @@ public class Manage {
         for (int i = 0;i<list.size();i++){
             if(login==list.get(i).getLogin()){
             try{
-                list.get(i).getSocket().close();
+                if (list.get(i).getSocket()!=null){
+                list.get(i).getSocket().close();}
             }catch(IOException e){   e.printStackTrace();}
             list.remove(list.get(i));
             }  
@@ -35,11 +36,10 @@ public class Manage {
         }
         return test;
     }
-    public void setStream(String client, ObjectOutputStream outputStream,ObjectInputStream inputStream,Socket socket){
+    public void setStream(String client, Socket socket,ObjectOutputStream out){
         list.stream().filter((list1) -> (list1.getLogin().equals(client))).forEach((Client list1) -> {
-            list1.setOutputStream(outputStream);
-            list1.setInputStream(inputStream);
             list1.setSocket(socket);
+            list1.setOutputStream(out);
         });
     }
     
