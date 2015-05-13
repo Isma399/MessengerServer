@@ -26,7 +26,7 @@ public class ActionClient implements Runnable{
             out.writeObject(welcome);
             out.flush();
             Manage.user.setStream(login,out,in,socket);
-            Thread thread4 = new Thread(new Reception(socket,in,out));
+            Thread thread4 = new Thread(new Reception(socket,in,out,login));
             thread4.start();
         } catch (IOException e){
             System.err.println(login + " s'est deconnecté.");

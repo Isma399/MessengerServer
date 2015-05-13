@@ -13,9 +13,10 @@ public class Reception implements Runnable{
     public ObjectInputStream in; 
     public ObjectOutputStream out;
     public Socket socket;
+    private String login;
     
-    public Reception(Socket socket,ObjectInputStream in,ObjectOutputStream out){
-        this.in = in;this.socket=socket;this.out=out;
+    public Reception(Socket socket,ObjectInputStream in,ObjectOutputStream out,String login){
+        this.in = in;this.socket=socket;this.out=out;this.login=login;
     }
 
     @Override
@@ -39,9 +40,9 @@ public class Reception implements Runnable{
                 }                 
             }
             catch (IOException e){
-                String delUser = Manage.user.del(out,in);
+                Manage.user.del(login);
                 view.ViewServer.setList(Manage.user.toString());
-                view.ViewServer.appendInfo("Déconnexion de " + delUser + ".\n");
+                view.ViewServer.appendInfo("Déconnexion de " + login + ".\n");
                 connected=false;
             }
             catch (ClassNotFoundException ex) {

@@ -15,21 +15,15 @@ public class Manage {
     public Manage(List<Client> list){this.list=list;}
     
     public void add(Client client) {list.add(client);}
-    public String del(ObjectOutputStream out,ObjectInputStream in) {
-        String login = new String();
+    public void del(String login) {
         for (int i = 0;i<list.size();i++){
-            if(out==list.get(i).getOutputStream())
-            login = list.get(i).getLogin();
-            
+            if(login==list.get(i).getLogin()){
             try{
-                out.close();
-                in.close();
-      //          list.get(i).getSocket().close();
-            }catch(IOException e){
-            e.printStackTrace();}
+                list.get(i).getSocket().close();
+            }catch(IOException e){   e.printStackTrace();}
             list.remove(list.get(i));
+            }  
         }
-        return login;
     }
     
     public boolean test(String client) {
@@ -58,8 +52,8 @@ public class Manage {
     @Override
     public String toString(){
         String text = new String();
-        for (Client list1 : list) {
-            text += list1 +"\n";
+        for (Client client : list) {
+            text += client.getLogin() +"\n";
         }
         return text;
     }
