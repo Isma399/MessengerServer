@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class ViewServer extends JFrame implements ActionListener{
 
-private final int screenWidth = 800;
+private final int screenWidth = 600;
 private final int screenHeight;
 private static final JTextArea chatRead = new JTextArea();
 private static final JTextArea displayInfo = new JTextArea();
@@ -16,9 +16,10 @@ public ViewServer(){
 
     //Initial Setup
     super("MessengerServer");
-        this.screenHeight = 600;
+    screenHeight = 500;
     setResizable(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLocation(0, 0);
     setSize(screenWidth,screenHeight);
     
     //Main Panels
@@ -30,16 +31,18 @@ public ViewServer(){
     
     displayInfo.setEditable(false);
     displayInfo.setBackground(Color.BLACK);
+    displayInfo.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10,Color.black));
     displayInfo.setForeground(Color.WHITE);
+   displayInfo.setPreferredSize(new Dimension(300, 400));
     display.add(displayInfo);
     display.setBackground(Color.LIGHT_GRAY);
-    center.add(display, BorderLayout.CENTER);
+    center.add(display, BorderLayout.NORTH);
     
     //Center Panel - ChatReader
     
     JPanel chat = new JPanel();
     chat.setLayout(new BoxLayout(chat, BoxLayout.Y_AXIS));
-    chat.setPreferredSize(new Dimension(600, 400));
+    //chat.setPreferredSize(new Dimension(200, 400));
     Font font;
     font = new Font("Verdana",Font.ITALIC, 50);
     chat.setFont(font);
@@ -48,20 +51,20 @@ public ViewServer(){
      
     chatRead.setEditable(false);
     chat.add(chatRead);
-    chat.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 10,Color.pink));
+    chat.setBorder(BorderFactory.createMatteBorder(10, 0, 0, 0,Color.pink));
     
-    center.add(chat, BorderLayout.SOUTH);
+    center.add(chat, BorderLayout.CENTER);
     
     //Right Panel : UserList
     JPanel right = new JPanel(new BorderLayout());
     JPanel users = new JPanel(new BorderLayout());
     users.setPreferredSize(new Dimension(200, 800));
-    
-    //JScrollPane userList = new JScrollPane();
-    
+    users.setBorder(BorderFactory.createMatteBorder(0, 10, 0, 0,Color.pink));
+        
     userList.setEditable(false);
     userList.setBackground(Color.DARK_GRAY);
     userList.setForeground(Color.white);
+    userList.setBorder(BorderFactory.createMatteBorder(10, 10, 0, 0,Color.darkGray));
     users.add(userList);
     right.add(users);
     

@@ -33,7 +33,6 @@ public class Authentification implements Runnable{
                 
                 if(Manage.user.test(login)){
                     out.println("connecte");//envoi du signal
-                    System.out.println("Envoi du signal connecte");
                     view.ViewServer.appendInfo(login + " connecté.\n");
                     out.flush();
                                         
@@ -51,7 +50,9 @@ public class Authentification implements Runnable{
             thread2 = new Thread(new ActionClient(socket,login));
             thread2.start();
         } catch (IOException e){
-            System.err.println("Erreur : " + login + " ne répond pas. ");
+            view.ViewServer.appendInfo(login + " s'est déconnecté.");
+            Manage.user.del(login);
+            //System.err.println("Erreur : " + login + " ne répond pas. ");
             //e.printStackTrace();
         }
     }

@@ -11,6 +11,7 @@ public class MessengerServer {
     public static  ServerSocket serverSocket = null;
     public static Thread thread;
     public static Client server= new Client("server",null,null);
+    public static Client welcomeServer = new Client("welcomeserver",null,null);
     
   
    public static void main(String[] args) {

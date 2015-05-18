@@ -21,18 +21,38 @@ public class ActionClient implements Runnable{
             
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            Manage.user.setStream(login,socket,out);
+            
             Message welcome =new Message();
             welcome.setClient(MessengerServer.server);
-            welcome.setText("Bienvenue, les utilisateurs connectés : " + Manage.user.toStringWelcome());
-            out.writeObject(welcome);
-            out.flush();
-            Manage.user.setStream(login,socket,out);
+            welcome.setText(Manage.user.toString());
+                        
+            for (int i = 0; i< Manage.user.size();i++){ //envoi de l'userList
+                Manage.user.get(i).getOutputStream().writeObject(welcome);
+                Manage.user.get(i).getOutputStream().flush();
+                Manage.user.get(i).getOutputStream().reset();
+            }
+                welcome.setClient(MessengerServer.welcomeServer);
+                //Envoi du message de bienvenu.
+            for (int i = 0; i< Manage.user.size();i++){
+                if (Manage.user.get(i).getLogin().equals(login)){
+                    welcome.setText("Bienvenue " + login + " sur NFP Messenger.");
+                    Manage.user.get(i).getOutputStream().writeObject(welcome);
+                    }
+                else{
+                    
+                    welcome.setText(login + " s'est connecté(e).");
+                Manage.user.get(i).getOutputStream().writeObject(welcome);
+                Manage.user.get(i).getOutputStream().flush();
+                }
+            }
+            
             Thread thread4 = new Thread(new Reception(socket,in,out,login));
             thread4.start();
         } catch (IOException e){ 
             Manage.user.del(login);
             view.ViewServer.setList(Manage.user.toString());
-            view.ViewServer.appendInfo("Déconnexion de " + login + ".\n");
+            view.ViewServer.appendInfo("Action. Déconnexion de " + login + ".\n");
            // System.err.println(login + " s'est deconnecté.");
            // e.printStackTrace();
             }

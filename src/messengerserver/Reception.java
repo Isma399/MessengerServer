@@ -37,8 +37,8 @@ public class Reception implements Runnable{
                             thread3.start();
                         }else{System.err.println("Socket inexistante!!");}
                     }
-                }                 
-            }
+                } 
+            }    
             catch (IOException e){
                 Manage.user.del(login);
                 view.ViewServer.setList(Manage.user.toString());
@@ -49,12 +49,8 @@ public class Reception implements Runnable{
                 System.err.println("Class Not found");
                 ex.printStackTrace();
             } 
-//            catch(java.net.SocketTimeoutException e2){
-//                System.err.println("Timed out trying to read from socket");
-//                connected=false;
-//            }
-            
         }
     }
+    }
 }
-}
+
