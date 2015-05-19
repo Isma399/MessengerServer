@@ -43,6 +43,20 @@ public class Reception implements Runnable{
                 Manage.user.del(login);
                 view.ViewServer.setList(Manage.user.toString());
                 view.ViewServer.appendInfo("Déconnexion de " + login + ".\n");
+                Message goodbye = new Message();
+                goodbye.setClient(MessengerServer.welcomeServer);
+                goodbye.setText(login + " s'est déconnecté.");
+                Message newList = new Message();
+                newList.setClient(MessengerServer.server);
+                newList.setText(Manage.user.toString());
+                for (int i = 0; i< Manage.user.size();i++){ 
+                    try{
+                    Manage.user.get(i).getOutputStream().writeObject(goodbye);
+                    Manage.user.get(i).getOutputStream().writeObject(newList);
+                    Manage.user.get(i).getOutputStream().flush();
+                    Manage.user.get(i).getOutputStream().reset();
+                }catch(IOException ex){ex.printStackTrace();}
+                }
                 connected=false;
             }
             catch (ClassNotFoundException ex) {
