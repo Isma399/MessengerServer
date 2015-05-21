@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class ViewServer extends JFrame implements ActionListener{
+public class ViewServer extends JFrame {
 
 private final int screenWidth = 600;
 private final int screenHeight;
@@ -74,10 +74,7 @@ public ViewServer(){
     add(window);
     setVisible(true);
 }
-@Override
-public void actionPerformed(ActionEvent e) {
-    chatRead.setText("");
-}
+
 public static void appendToChat(String text){
     chatRead.append(text);
 }

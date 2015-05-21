@@ -6,7 +6,7 @@ public class AcceptConnexion implements Runnable{
     
     private ServerSocket socketserver = null;
     private Socket socket = null;
-    public Thread thread1;
+    private Thread thread1;
   
     public AcceptConnexion(ServerSocket ss){socketserver = ss;}
 

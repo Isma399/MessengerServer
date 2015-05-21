@@ -11,9 +11,9 @@ public class Authentification implements Runnable{
     private PrintWriter out = null;
     private BufferedReader in = null;
     private String login = "test";
-    public boolean isAuthenticated = false;
-    public Thread thread2;
-    public SocketAddress clientSocket;
+    private boolean isAuthenticated = false;
+    private Thread thread2;
+    private SocketAddress clientSocket;
     
     
     public Authentification(Socket s){socket = s;}
@@ -43,14 +43,14 @@ public class Authentification implements Runnable{
                 } else {
                     out.println("loginAlreadyUsed");
                     out.flush();
-                    view.ViewServer.appendInfo(" login déjà utilisé. \n");
+                    view.ViewServer.appendInfo(login + " login déjà utilisé. \n");
                     out.close();
                 }
             }
             thread2 = new Thread(new ActionClient(socket,login));
             thread2.start();
         } catch (IOException e){
-            view.ViewServer.appendInfo(login + " s'est déconnecté.");
+            view.ViewServer.appendInfo("Fermeture socket pour le login : " + login + ".\n");
             Manage.user.del(login);
             //System.err.println("Erreur : " + login + " ne répond pas. ");
             //e.printStackTrace();

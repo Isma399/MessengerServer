@@ -10,7 +10,7 @@ public class ActionClient implements Runnable{
     private Socket socket = null;
     private String login = "test";
     private Thread thread3, thread4;
-    public Message message=new Message();
+    private Message message=new Message();
     
     public ActionClient(Socket socket, String login){this.socket = socket;this.login=login;}
     

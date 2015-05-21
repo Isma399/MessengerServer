@@ -8,12 +8,11 @@ import javax.swing.SwingUtilities;
 
 public class MessengerServer {
 
-    public static  ServerSocket serverSocket = null;
-    public static Thread thread;
-    public static Client server= new Client("server",null,null);
-    public static Client welcomeServer = new Client("welcomeserver",null,null);
-    
-  
+    private static ServerSocket serverSocket = null;
+    private static Thread thread;
+    public static Client server = new Client("server",null,null);
+    public static Client welcomeServer = new Client("welcomeServer",null,null);
+      
    public static void main(String[] args) {
        
         try {

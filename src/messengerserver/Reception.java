@@ -10,10 +10,10 @@ import view.ViewServer;
 //import java.awt.event.ActionEvent;
 
 public class Reception implements Runnable{
-    public ObjectInputStream in; 
-    public ObjectOutputStream out;
-    public Socket socket;
-    private String login;
+    private final ObjectInputStream in; 
+    private final ObjectOutputStream out;
+    private final Socket socket;
+    private final String login;
     
     public Reception(Socket socket,ObjectInputStream in,ObjectOutputStream out,String login){
         this.in = in;this.socket=socket;this.out=out;this.login=login;

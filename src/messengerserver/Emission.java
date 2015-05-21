@@ -4,15 +4,14 @@ import java.io.*;
 
 public class Emission implements Runnable{
   
-   public ObjectOutputStream out;
-   public Message message,mess;
+   private ObjectOutputStream out;
+   private Message message;
          
    public Emission(ObjectOutputStream out, Message message){this.out=out;this.message=message;}
 
    @Override
     public void run(){
         try{
-                    
             if (out!=null){
             for (int i=0;i<Manage.user.size();i++){
                 if (Manage.user.get(i).getLogin().equals(message.getClient().getLogin())){}
